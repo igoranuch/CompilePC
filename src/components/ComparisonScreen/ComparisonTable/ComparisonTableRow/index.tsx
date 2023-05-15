@@ -1,7 +1,6 @@
 import React from 'react';
 import { TableCell, TableRow } from '@mui/material';
 import { CategorySpec } from '../../../../../types';
-import useStyles from './styles';
 
 type ComparisonTableRowProps = {
   spec: CategorySpec;

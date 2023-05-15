@@ -6,7 +6,6 @@ import { CategoryName, CategorySpec } from '../../../../types';
 import ComparisonTableHead from './ComparisonTableHead';
 import ComparisonTableBody from './ComparisonTableBody';
 import getCategorySpecs from '../../../utils/getCategorySpecs';
-import useStyles from './styles';
 
 type ComparisonTableProps = {
   category: CategoryName;
@@ -22,7 +21,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ category }) => {
 
   return (
     <TableContainer>
-      <Table>
+      <Table stickyHeader>
         <ComparisonTableHead parts={comparisonParts} />
         <ComparisonTableBody specs={categorySpec} />
       </Table>
