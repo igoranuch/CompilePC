@@ -7,6 +7,7 @@ import {
   SelectedFilter,
   CompatibleFilter,
   Comparison,
+  User,
 } from '../../../types/index';
 import {
   emptyComparisonState,
@@ -21,6 +22,7 @@ export interface BuilderState {
   assembly: Assembly;
   compatibleFilters: CompatibleFilter;
   comparison: Comparison;
+  user: User;
 }
 
 const builders: Builder[] = Object.values(ProductCategories).map(
@@ -36,6 +38,7 @@ const initialState: BuilderState = {
   assembly: emptyState,
   compatibleFilters: emptyState,
   comparison: emptyComparisonState,
+  user: null,
 };
 
 export const builderSlice = createSlice({
@@ -117,6 +120,18 @@ export const builderSlice = createSlice({
         ],
       };
     },
+    setUser: (
+      state,
+      action: PayloadAction<{ uid: string; uEmail: string }>,
+    ) => {
+      state.user = {
+        userId: action.payload.uid,
+        email: action.payload.uEmail,
+      };
+    },
+    logOut: (state) => {
+      state.user = null;
+    },
   },
 });
 
@@ -128,6 +143,8 @@ export const {
   eraseAssembly,
   addComparisonItem,
   removeComparisonItem,
+  setUser,
+  logOut,
 } = builderSlice.actions;
 
 export default builderSlice.reducer;

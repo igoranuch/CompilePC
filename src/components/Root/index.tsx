@@ -5,6 +5,9 @@ import BuildScreen from '../BuildScreen';
 import NotFoundScreen from '../NotFoundScreen';
 import ProductScreen from '../ProductScreen';
 import ComparisonScreen from '../ComparisonScreen';
+import SignIn from '../SignIn';
+import SignUp from '../SignUp';
+import ProtectedRoute from '../ProtectedRoute';
 
 const Root: React.FC = () => {
   return (
@@ -14,9 +17,16 @@ const Root: React.FC = () => {
         <Route path="/*" element={<NotFoundScreen />} />
         <Route path="/product/:category/:id/*" element={<ProductScreen />} />
         <Route path="/comparison" element={<ComparisonScreen />} />
-        <Route path="/login" element={<div>Sign In</div>} />
-        <Route path="/register" element={<div>Sign Up</div>} />
-        <Route path="/assemblies" element={<div>Assemblies</div>} />
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/register" element={<SignUp />} />
+        <Route
+          path="/assemblies"
+          element={
+            <ProtectedRoute>
+              <div>Assemblies</div>
+            </ProtectedRoute>
+          }
+        />
         <Route path="/assembly/:id/*" element={<div>Assembly</div>} />
       </Routes>
     </Layout>

@@ -7,6 +7,7 @@ import {
   Part,
   CompatibleFilter,
   Comparison,
+  User,
 } from '../../../types/index';
 import { RootState } from '../index';
 
@@ -47,6 +48,8 @@ const selectFilter = (
 ): Selector<SelectedFilter | null> =>
   createSelector(selectBuilder(category), (builder) => builder?.filter || null);
 
+const selectUser = (state: RootState): User => state.user;
+
 export {
   selectOpenedBuilder,
   selectBuilders,
@@ -56,4 +59,5 @@ export {
   selectFilter,
   selectCompatibleFilters,
   selectComparisonParts,
+  selectUser,
 };

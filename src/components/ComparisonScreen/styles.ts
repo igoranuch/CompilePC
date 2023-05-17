@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
         border: '1px solid',
         borderColor: theme.palette.backgroundBlack,
         minWidth: theme.spacing(60),
+        maxWidth: theme.spacing(70),
       },
       '& .MuiTableHead-root': {
         '& .MuiTableCell-root': {

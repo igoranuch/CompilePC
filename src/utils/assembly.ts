@@ -17,4 +17,25 @@ const getAverageSum = (assembly: Assembly): number => {
 const isEmpty = (assembly: Assembly): boolean =>
   Object.values(assembly).every((part) => !part);
 
-export { getAverageSum, isEmpty };
+const isSaveable = (assembly: Assembly): boolean => {
+  const {
+    CPU,
+    GPU,
+    PSU,
+    RAM,
+    case: computerCase,
+    motherboard,
+    SSD,
+    HDD,
+  } = assembly;
+
+  if (!CPU || !GPU || !PSU || !RAM || !computerCase || !motherboard) {
+    return false;
+  }
+
+  const hasStorage = SSD !== null || HDD !== null;
+
+  return hasStorage;
+};
+
+export { getAverageSum, isEmpty, isSaveable };

@@ -88,6 +88,8 @@ const ROUTES = {
   PRODUCT: '/product/:category/:id/',
   ASSEMBLY: '/assembly/:id',
   COMPARISON: '/comparison',
+  LOGIN: '/login',
+  REGISTER: '/register',
 };
 
 const NUMERIC_FORMAT = /^[0-9]*$/;

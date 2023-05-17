@@ -399,5 +399,19 @@ export type CompatibleFilter = {
 
 export type CategorySpec = {
   title: string;
-  values: (string | boolean | null | number)[];
+  values: (string | string[] | boolean | null | number)[];
 };
+
+export type PartsType = { collection: CollectionName; partId: string };
+
+export type FullAssembly = {
+  name: string;
+  description: string;
+  parts: PartsType[];
+  userId: string;
+};
+
+export type User = {
+  userId: string;
+  email: string;
+} | null;

@@ -9,7 +9,7 @@ import { CategoryName } from '../../../../types';
 import useStyles from './styles';
 import { selectAssembly } from '../../../store/builder/selectors';
 import { eraseAssembly } from '../../../store/builder/slice';
-import { getAverageSum, isEmpty } from '../../../utils/assembly';
+import { getAverageSum, isEmpty, isSaveable } from '../../../utils/assembly';
 import AssemblyPart from './AssemblyPart';
 
 const Assembly = () => {
@@ -20,6 +20,8 @@ const Assembly = () => {
   const assembly = useSelector(selectAssembly);
 
   const isAssemblyEmpty = useMemo(() => isEmpty(assembly), [assembly]);
+
+  const isAssemblySaveable = useMemo(() => isSaveable(assembly), [assembly]);
 
   const totalSum = useMemo(() => getAverageSum(assembly), [assembly]);
 
@@ -60,7 +62,7 @@ const Assembly = () => {
               variant="contained"
               fullWidth
               className={styles.button}
-              disabled={isAssemblyEmpty}
+              disabled={!isAssemblySaveable}
             >
               Save
             </Button>

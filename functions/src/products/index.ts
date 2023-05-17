@@ -29,7 +29,7 @@ const getProducts = functions
     const db = await getDB();
     const normalizedCompatibleFilters = normalizeFilter(compatiblePropsValues);
     const normalizedFilter = normalizeFilter(filter);
-    const cursor = db
+    const cursor = await db
       .collection(collectionName)
       .find({ ...normalizedFilter, ...normalizedCompatibleFilters })
       .limit(pageSize)

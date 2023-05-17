@@ -22,7 +22,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ category }) => {
   return (
     <TableContainer>
       <Table stickyHeader>
-        <ComparisonTableHead parts={comparisonParts} />
+        <ComparisonTableHead parts={comparisonParts} category={category} />
         <ComparisonTableBody specs={categorySpec} />
       </Table>
     </TableContainer>
