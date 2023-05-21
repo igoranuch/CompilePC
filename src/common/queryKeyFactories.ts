@@ -14,6 +14,16 @@ const QUERY_KEY_FACTORIES = {
       { ...QUERY_KEY_FACTORIES.PRODUCTS.all(), id, category },
     ],
   },
+  ASSEMBLIES: {
+    all: () => ['assemblies'],
+    list: (userId: string) => [
+      {
+        ...QUERY_KEY_FACTORIES.ASSEMBLIES.all(),
+        userId,
+      },
+    ],
+    get: (id: string) => [{ ...QUERY_KEY_FACTORIES.PRODUCTS.all(), id }],
+  },
 };
 
 export default QUERY_KEY_FACTORIES;

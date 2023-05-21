@@ -2,7 +2,8 @@ import Joi = require('joi');
 import { getDB } from '../bootstrap';
 import { DEFAULT_REGION } from '../common/constants';
 import * as functions from 'firebase-functions';
-import { FullAssembly } from '../../../types';
+import { CreatedAssembly } from '../../../types';
+import { ObjectId } from 'mongodb';
 
 const getAssemblySchema = Joi.object({
   id: Joi.string(),
@@ -23,32 +24,37 @@ const getAssembly = functions
 
     const db = await getDB();
 
-    try {
-      const assembly = (await db
-        .collection<FullAssembly>('assemblies')
-        .findOne({ id })) as FullAssembly;
+    const _id = new ObjectId(id);
 
-      return assembly;
+    try {
+      const res = (await db
+        .collection<CreatedAssembly>('assemblies')
+        .findOne({ _id })) as CreatedAssembly;
+
+      return res;
     } catch (error) {
-      throw new functions.https.HttpsError('not-found', 'Product not found');
+      throw new functions.https.HttpsError('not-found', 'Assembly not found');
     }
   });
 
 const insertAssembly = functions
   .region(DEFAULT_REGION)
   .https.onCall(async (data) => {
-    const { description, name } = data as FullAssembly;
+    const { description, name } = data;
 
     await insertAssemblySchema.validateAsync({ description, name });
 
     const db = await getDB();
 
     try {
-      const assembly = await db.collection('assemblies').insertOne(data);
-
-      return assembly;
+      const result = await db.collection('assemblies').insertOne(data);
+      const assemblyId = result.insertedId.toString();
+      return { assemblyId };
     } catch (error) {
-      throw new functions.https.HttpsError('not-found', 'Product not found');
+      throw new functions.https.HttpsError(
+        'already-exists',
+        'Assembly not inserted',
+      );
     }
   });
 

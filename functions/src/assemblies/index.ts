@@ -21,9 +21,11 @@ const getAssemblies = functions
 
       const result = await cursor.toArray();
 
+      console.log(result);
+
       return result;
     } catch (error) {
-      throw new functions.https.HttpsError('not-found', 'Product not found');
+      throw new functions.https.HttpsError('not-found', 'Assemblies not found');
     }
   });
 

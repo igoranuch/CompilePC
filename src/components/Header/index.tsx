@@ -2,19 +2,18 @@ import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import { Button, Box, Container, Typography } from '@mui/material';
 import { Link, generatePath } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useUser } from 'reactfire';
 import { AppLogo } from '../Icons';
 import { ROUTES } from '../../common/constants';
-import { selectUser } from '../../store/builder/selectors';
-import { logOut } from '../../store/builder/slice';
+import app from '../../common/firebaseApp';
 
 const Header: React.FC = () => {
-  const user = useSelector(selectUser);
+  const { data: user } = useUser();
 
-  const dispatch = useDispatch();
+  const auth = app.auth();
 
   const handleLogOut = () => {
-    dispatch(logOut());
+    auth.signOut();
   };
 
   return (
@@ -51,7 +50,14 @@ const Header: React.FC = () => {
               </>
             ) : (
               <>
-                <Typography variant="h3">{user.email}</Typography>
+                <Link
+                  style={{ textDecoration: 'none' }}
+                  to={generatePath(ROUTES.ASSEMBLIES)}
+                >
+                  <Button color="secondary" variant="contained">
+                    Assemblies
+                  </Button>
+                </Link>
                 <Button
                   color="primary"
                   variant="contained"

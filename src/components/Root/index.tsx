@@ -8,6 +8,7 @@ import ComparisonScreen from '../ComparisonScreen';
 import SignIn from '../SignIn';
 import SignUp from '../SignUp';
 import ProtectedRoute from '../ProtectedRoute';
+import AssemblyScreen from '../AssemblyScreen';
 
 const Root: React.FC = () => {
   return (
@@ -27,7 +28,7 @@ const Root: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/assembly/:id/*" element={<div>Assembly</div>} />
+        <Route path="/assembly/:id/*" element={<AssemblyScreen />} />
       </Routes>
     </Layout>
   );

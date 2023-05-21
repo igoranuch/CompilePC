@@ -87,6 +87,7 @@ const ProductPageTabs = [
 const ROUTES = {
   PRODUCT: '/product/:category/:id/',
   ASSEMBLY: '/assembly/:id',
+  ASSEMBLIES: '/assemblies',
   COMPARISON: '/comparison',
   LOGIN: '/login',
   REGISTER: '/register',

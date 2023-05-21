@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme: Theme) =>
     sideSection: {
       width: '100%',
       maxWidth: 300,
+      marginBottom: theme.spacing(4),
     },
     wrapper: {
       display: 'flex',

@@ -402,16 +402,22 @@ export type CategorySpec = {
   values: (string | string[] | boolean | null | number)[];
 };
 
-export type PartsType = { collection: CollectionName; partId: string };
-
-export type FullAssembly = {
+export type PartType = {
+  title: string;
+  category: CategoryName;
+  collection: CollectionName;
+  id: string;
   name: string;
-  description: string;
-  parts: PartsType[];
-  userId: string;
+  image: string;
+  price: PriceRange;
 };
 
-export type User = {
-  userId: string;
-  email: string;
-} | null;
+export type CreatedAssembly = {
+  name: string;
+  description: string;
+  parts: PartType[];
+  userId: string[];
+  price: number;
+};
+
+export type FullAssembly = CreatedAssembly & { id: string };

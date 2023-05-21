@@ -12,13 +12,11 @@ import Container from '@mui/material/Container';
 import { generatePath, Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
+import { useUser } from 'reactfire';
 import { ROUTES } from '../../common/constants';
 import useStyles from './styles';
 import app from '../../common/firebaseApp';
 import { UIContext } from '../UIContext';
-import { setUser } from '../../store/builder/slice';
-import { selectUser } from '../../store/builder/selectors';
 
 const signUpSchema = Yup.object({
   email: Yup.string()
@@ -34,17 +32,15 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const stateUser = useSelector(selectUser);
+  const { data: user } = useUser();
 
   useEffect(() => {
-    if (stateUser) {
+    if (user) {
       navigate('/');
     }
-  }, [navigate, stateUser]);
+  }, [navigate, user]);
 
   const { setAlert } = useContext(UIContext);
-
-  const dispatch = useDispatch();
 
   const auth = app.auth();
 
@@ -56,15 +52,10 @@ const SignUp = () => {
     validationSchema: signUpSchema,
     onSubmit: async (values) => {
       try {
-        const { user } = await auth.createUserWithEmailAndPassword(
+        await auth.createUserWithEmailAndPassword(
           values.email,
           values.password,
         );
-
-        if (user && user.email) {
-          const { uid, email: uEmail } = user;
-          dispatch(setUser({ uid, uEmail }));
-        }
       } catch (err) {
         if (err instanceof Error) {
           setAlert({

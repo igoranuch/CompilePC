@@ -47,11 +47,7 @@ const ComparisonTableHead: React.FC<ComparisonTableHeadProps> = ({
                   </Typography>
                 </Tooltip>
               </Link>
-              <Typography
-                variant="h3"
-                color="secondary"
-                className={styles.linkText}
-              >
+              <Typography variant="h3" color="secondary">
                 {`${part.price.range.minPrice.toLocaleString()} ₴ -
                 ${part.price.range.maxPrice.toLocaleString()} ₴`}
               </Typography>
