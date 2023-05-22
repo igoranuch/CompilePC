@@ -2,7 +2,7 @@ import Joi = require('joi');
 import { getDB } from '../bootstrap';
 import { DEFAULT_REGION } from '../common/constants';
 import * as functions from 'firebase-functions';
-import { CreatedAssembly } from '../../../types';
+import { CreatedAssembly, Part } from '../../../types';
 import { ObjectId } from 'mongodb';
 
 const getAssemblySchema = Joi.object({
@@ -31,7 +31,17 @@ const getAssembly = functions
         .collection<CreatedAssembly>('assemblies')
         .findOne({ _id })) as CreatedAssembly;
 
-      return res;
+      const products = await Promise.all(
+        res.parts.map(async (part) => {
+          const rawPart = await db
+            .collection<Part>(part.collection)
+            .findOne({ id: part.id });
+
+          return { ...rawPart, category: part.category };
+        }),
+      );
+
+      return { ...res, ['parts']: products };
     } catch (error) {
       throw new functions.https.HttpsError('not-found', 'Assembly not found');
     }

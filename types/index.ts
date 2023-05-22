@@ -403,13 +403,9 @@ export type CategorySpec = {
 };
 
 export type PartType = {
-  title: string;
   category: CategoryName;
   collection: CollectionName;
   id: string;
-  name: string;
-  image: string;
-  price: PriceRange;
 };
 
 export type CreatedAssembly = {
@@ -420,4 +416,4 @@ export type CreatedAssembly = {
   price: number;
 };
 
-export type FullAssembly = CreatedAssembly & { id: string };
+export type FullAssembly = CreatedAssembly & { _id: string };

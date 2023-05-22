@@ -8,15 +8,10 @@ const normalizeAssembly = (assembly: Assembly): PartType[] => {
     ([category, part]) => {
       if (part) {
         return {
-          title: ProductCategories[category as CategoryName]
-            .builderTitle as string,
           collection: ProductCategories[category as CategoryName]
             .collectionName as CollectionName,
           category,
           id: part.id,
-          name: part.name,
-          image: part.mainImage,
-          price: part.price.range,
         };
       }
       return null;

@@ -1,17 +1,13 @@
 import React from 'react';
-import { useUser } from 'reactfire';
-import useAssemblies from '../../hooks/useAssemblies';
+import { useParams } from 'react-router-dom';
+import useAssembly from '../../hooks/useAssembly';
 
 const AssemblyScreen = () => {
-  // const { id } = useParams();
+  const { id } = useParams();
 
-  const { data } = useUser();
+  const { data: assembly, isError, isLoading } = useAssembly(id as string);
 
-  const userId = data.uid;
-
-  const { data: assemblies, isError, isLoading } = useAssemblies(userId);
-
-  console.log(assemblies);
+  console.log(assembly);
 
   return <div>biba</div>;
 };
