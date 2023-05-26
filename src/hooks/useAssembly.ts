@@ -1,11 +1,11 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useContext } from 'react';
-import { CreatedAssembly } from '../../types/index';
+import { FilledAssembly } from '../../types/index';
 import { UIContext } from '../components/UIContext';
 import QUERY_KEY_FACTORIES from '../common/queryKeyFactories';
 import Assemblies from '../api/assemblies';
 
-const useAssembly = (id: string): UseQueryResult<CreatedAssembly> => {
+const useAssembly = (id: string): UseQueryResult<FilledAssembly> => {
   const { setAlert } = useContext(UIContext);
 
   return useQuery(
@@ -16,7 +16,7 @@ const useAssembly = (id: string): UseQueryResult<CreatedAssembly> => {
         setAlert({
           show: true,
           severity: 'error',
-          message: `Could not fetch assembly. Try again later.`,
+          message: `No assembly found.`,
         }),
     },
   );

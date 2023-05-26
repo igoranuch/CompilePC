@@ -16,7 +16,7 @@ const useAssemblies = (userId: string): UseQueryResult<CreatedAssembly[]> => {
         setAlert({
           show: true,
           severity: 'error',
-          message: `Could not fetch assemblies. Try again later.`,
+          message: `Could not fetch assemblies.`,
         }),
     },
   );

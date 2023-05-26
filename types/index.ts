@@ -416,4 +416,16 @@ export type CreatedAssembly = {
   price: number;
 };
 
+export type AssemblyPartType = Part & {
+  category: CategoryName;
+};
+
 export type FullAssembly = CreatedAssembly & { _id: string };
+
+export type FilledAssembly = {
+  name: string;
+  description: string;
+  parts: AssemblyPartType[];
+  userId: string[];
+  price: number;
+};

@@ -1,6 +1,6 @@
 import React from 'react';
 import AppBar from '@mui/material/AppBar';
-import { Button, Box, Container, Typography } from '@mui/material';
+import { Button, Box, Container } from '@mui/material';
 import { Link, generatePath } from 'react-router-dom';
 import { useUser } from 'reactfire';
 import { AppLogo } from '../Icons';
