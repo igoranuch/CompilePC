@@ -3,11 +3,16 @@ import { CategoryName, SelectedFilter } from '../../types/index';
 const QUERY_KEY_FACTORIES = {
   PRODUCTS: {
     all: () => ['products'],
-    list: (category: CategoryName, filter: SelectedFilter) => [
+    list: (
+      category: CategoryName,
+      filter: SelectedFilter,
+      searchValue: string,
+    ) => [
       {
         ...QUERY_KEY_FACTORIES.PRODUCTS.all(),
         category,
         filter,
+        searchValue,
       },
     ],
     get: (id: string, category: CategoryName) => [

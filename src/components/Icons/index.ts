@@ -1,3 +1,4 @@
+import SearchIcon from '@mui/icons-material/Search';
 import { ReactComponent as AppLogo } from './logo.svg';
 import { ReactComponent as CPUIcon } from './cpu-icon.svg';
 import { ReactComponent as PSUBigIcon } from './psu-big-icon.svg';
@@ -24,4 +25,5 @@ export {
   RAMIcon,
   SSDIcon,
   ErrorLoading,
+  SearchIcon,
 };

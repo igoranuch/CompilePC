@@ -1,7 +1,6 @@
-import React from 'react';
-import { Typography } from '@mui/material';
+import React, { useState, useCallback } from 'react';
+import { Typography, Box } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { Box } from '@mui/system';
 import ProductAccordion from './ProductAccordion';
 import BuilderProduct from './BuilderProduct';
 import {
@@ -13,12 +12,22 @@ import SkeletonProduct from './SkeletonProduct';
 import useProducts from '../../../../hooks/useProducts';
 import Pagination from '../../../Pagination';
 import ScrollButton from '../../../ScrollButton';
+import Search from '../../../Search';
+import useDebounce from '../../../../hooks/useDebounce';
 
 type BuilderProps = {
   builder: Builder;
 };
 
 const BuilderModule: React.FC<BuilderProps> = ({ builder }) => {
+  const [searchValue, setSearchValue] = useState('');
+
+  const debouncedSearchValue = useDebounce(searchValue, 500);
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  }, []);
+
   const {
     data: products,
     isLoading,
@@ -26,7 +35,11 @@ const BuilderModule: React.FC<BuilderProps> = ({ builder }) => {
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
-  } = useProducts({ builder, pageSize: DEFAULT_PAGE_SIZE });
+  } = useProducts({
+    builder,
+    pageSize: DEFAULT_PAGE_SIZE,
+    searchValue: debouncedSearchValue,
+  });
 
   const BuilderProducts = () => (
     <>
@@ -53,6 +66,7 @@ const BuilderModule: React.FC<BuilderProps> = ({ builder }) => {
       icon={IconByCategory[builder.categoryName]}
       builder={builder}
     >
+      <Search searchValue={searchValue} handleChange={handleChange} />
       {isError ? (
         <Box
           display="flex"

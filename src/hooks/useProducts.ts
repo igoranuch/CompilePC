@@ -17,11 +17,13 @@ import {
 type useProductProps = {
   builder: Builder;
   pageSize: number;
+  searchValue: string;
 };
 
 const useProducts = ({
   builder,
   pageSize,
+  searchValue,
 }: useProductProps): UseInfiniteQueryResult => {
   const { setAlert } = useContext(UIContext);
 
@@ -34,7 +36,7 @@ const useProducts = ({
   const isEnabled = openedBuilder === categoryName;
 
   return useInfiniteQuery(
-    QUERY_KEY_FACTORIES.PRODUCTS.list(categoryName, filter),
+    QUERY_KEY_FACTORIES.PRODUCTS.list(categoryName, filter, searchValue),
     ({ pageParam = 1 }) =>
       Products.list(
         collectionName,
@@ -42,6 +44,7 @@ const useProducts = ({
         pageParam,
         pageSize,
         compatibleFilter,
+        searchValue,
       ),
     {
       enabled: isEnabled,
