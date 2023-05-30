@@ -423,6 +423,7 @@ export type AssemblyPartType = Part & {
 export type FullAssembly = CreatedAssembly & { _id: string };
 
 export type FilledAssembly = {
+  _id: string;
   name: string;
   description: string;
   parts: AssemblyPartType[];

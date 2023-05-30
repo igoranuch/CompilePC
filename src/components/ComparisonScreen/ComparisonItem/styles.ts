@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme: Theme) =>
     comparisonImage: {
       borderRadius: theme.spacing(4),
       width: theme.spacing(20),
+      maxHeight: theme.spacing(25),
     },
     imageContainer: {
       display: 'flex',
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     typo: {
+      textAlign: 'center',
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
       overflow: 'hidden',

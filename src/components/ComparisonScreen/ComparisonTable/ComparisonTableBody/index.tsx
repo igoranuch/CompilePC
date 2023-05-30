@@ -10,8 +10,9 @@ type ComparisonTableBodyProps = {
 const ComparisonTableBody: React.FC<ComparisonTableBodyProps> = ({ specs }) => {
   return (
     <TableBody>
-      {specs.map((spec) => (
-        <ComparisonTableRow spec={spec} />
+      {specs.map((spec, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <ComparisonTableRow spec={spec} key={index} />
       ))}
     </TableBody>
   );
