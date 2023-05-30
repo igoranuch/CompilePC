@@ -22,7 +22,7 @@ const ComparisonTableRow: React.FC<ComparisonTableRowProps> = ({ spec }) => {
         <TableCell key={index}>
           <Typography variant="h6">
             {Array.isArray(value) ? (
-              value.join(',')
+              value.join(', ')
             ) : typeof value === 'boolean' ? (
               <CheckIcon className={styles.checkIcon} />
             ) : (

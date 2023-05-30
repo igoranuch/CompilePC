@@ -59,7 +59,7 @@ const getProducts = functions
 
     return {
       result,
-      nextPage: count <= pageSize ? null : pageParam + 1,
+      nextPage: count < pageSize ? null : pageParam + 1,
     };
   });
 
