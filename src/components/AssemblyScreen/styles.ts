@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme: Theme) =>
       gap: '7px',
       maxHeight: '600px',
       maxWidth: '850px',
-      overflow: 'auto',
       flexWrap: 'wrap',
+      overflow: 'auto',
       '&::-webkit-scrollbar': {
         width: 4,
         height: 4,

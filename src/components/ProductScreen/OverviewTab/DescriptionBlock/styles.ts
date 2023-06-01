@@ -5,9 +5,13 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     description: {
       textAlign: 'justify',
+      '& p': {
+        margin: 0,
+        padding: 0,
+      },
     },
     descriptionPaper: {
-      padding: theme.spacing(4),
+      padding: theme.spacing(5),
       width: '100% !important',
     },
   }),

@@ -18,7 +18,7 @@ const TableElement: React.FC<TableElementProps> = ({ offer, store }) => {
 
   return (
     <Grid item xs={2} sm={2} md={1}>
-      <Box display="flex" justifyContent="space-between" maxWidth={300}>
+      <Box display="flex" justifyContent="space-between" maxWidth={600}>
         <Link href={offer.link} target="blank" underline="none">
           <Typography className={styles.store}>{store.name} →</Typography>
         </Link>

@@ -26,7 +26,9 @@ const Header: React.FC = () => {
           paddingY={2}
         >
           <Link to="/">
-            <AppLogo />
+            <Box display="flex" alignItems="center" justifyContent="center">
+              <AppLogo />
+            </Box>
           </Link>
           <Box display="flex" gap={4} alignItems="center">
             {!user ? (

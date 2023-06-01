@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import {
   TableCell,
   TableHead,
@@ -34,8 +35,8 @@ const ComparisonTableHead: React.FC<ComparisonTableHeadProps> = ({
             <Typography variant="h3">Properties</Typography>
           </Box>
         </TableCell>
-        {parts.map((part: Part) => (
-          <TableCell>
+        {parts.map((part: Part, index) => (
+          <TableCell key={index}>
             <Box className={styles.headCellBox}>
               <Link
                 style={{ textDecoration: 'none' }}

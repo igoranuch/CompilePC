@@ -14,16 +14,20 @@ type ComparisonTableProps = {
 const ComparisonTable: React.FC<ComparisonTableProps> = ({ category }) => {
   const comparisonParts = useSelector(selectComparisonParts(category));
 
-  const categorySpec = getCategorySpecs(
+  const categorySpecs = getCategorySpecs(
     category,
     comparisonParts,
   ) as CategorySpec[];
+
+  const filteredSpecs = categorySpecs.filter(
+    (spec: CategorySpec) => !spec.values.every((value) => !value),
+  );
 
   return (
     <TableContainer>
       <Table stickyHeader>
         <ComparisonTableHead parts={comparisonParts} category={category} />
-        <ComparisonTableBody specs={categorySpec} />
+        <ComparisonTableBody specs={filteredSpecs} />
       </Table>
     </TableContainer>
   );

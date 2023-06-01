@@ -30,6 +30,7 @@ const Products = {
     pageParam: number,
     pageSize: number,
     compatibleFilters: CompatibleFilter,
+    searchValue: string,
   ): Promise<Response> => {
     const getProducts = functions.httpsCallable('getProducts');
     const { data: result }: { data: Response } = await getProducts({
@@ -38,6 +39,7 @@ const Products = {
       pageParam,
       pageSize,
       compatibleFilters,
+      searchValue,
     });
     return result;
   },

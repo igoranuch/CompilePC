@@ -43,8 +43,10 @@ const formMotherboardSpecs = (product: Motherboard): SpecBlock[] => [
     name: 'RAM',
     specs: [
       {
-        title: 'DDR4',
-        value: product.DDR4,
+        title: 'Ram type',
+        value: Array.isArray(product.ramType)
+          ? product.ramType.join(',')
+          : product.ramType,
       },
       {
         title: 'Memory module',

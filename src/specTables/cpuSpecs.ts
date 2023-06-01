@@ -90,8 +90,22 @@ const formCPUSpecs = (product: CPU): SpecBlock[] => [
     name: 'Memory support',
     specs: [
       {
+        title: 'Ram type',
+        value: Array.isArray(product.ramType)
+          ? product.ramType.join(',')
+          : product.ramType,
+      },
+      {
+        title: 'Max. clock speed of DDR3',
+        value: product.maxDDR3Speed,
+      },
+      {
         title: 'Max. clock speed of DDR4',
         value: product.maxDDR4Speed,
+      },
+      {
+        title: 'Max. clock speed of DDR5',
+        value: product.maxDDR5Speed,
       },
       {
         title: 'Number of channels',

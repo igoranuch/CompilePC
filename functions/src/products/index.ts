@@ -16,8 +16,14 @@ const getProductsSchema = Joi.object({
 const getProducts = functions
   .region(DEFAULT_REGION)
   .https.onCall(async (data) => {
-    const { collectionName, filter, pageParam, pageSize, compatibleFilters } =
-      data;
+    const {
+      collectionName,
+      filter,
+      pageParam,
+      pageSize,
+      compatibleFilters,
+      searchValue,
+    } = data;
 
     const compatiblePropsValues = getCompatiblePropsValues(
       collectionName,
@@ -29,9 +35,21 @@ const getProducts = functions
     const db = await getDB();
     const normalizedCompatibleFilters = normalizeFilter(compatiblePropsValues);
     const normalizedFilter = normalizeFilter(filter);
+
+    const trimedValue = searchValue.trim();
+
+    const searchFilter = Object.assign(
+      trimedValue && { name: new RegExp(trimedValue, 'i') },
+      {},
+    );
+
     const cursor = await db
       .collection(collectionName)
-      .find({ ...normalizedFilter, ...normalizedCompatibleFilters })
+      .find({
+        ...normalizedFilter,
+        ...normalizedCompatibleFilters,
+        ...searchFilter,
+      })
       .limit(pageSize)
       .skip((pageParam - 1) * pageSize);
 
@@ -41,7 +59,7 @@ const getProducts = functions
 
     return {
       result,
-      nextPage: count < 10 ? null : pageParam + 1,
+      nextPage: count < pageSize ? null : pageParam + 1,
     };
   });
 
