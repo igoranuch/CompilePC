@@ -9,6 +9,7 @@ import SignIn from '../SignIn';
 import SignUp from '../SignUp';
 import ProtectedRoute from '../ProtectedRoute';
 import AssemblyScreen from '../AssemblyScreen';
+import AssemblyPage from '../AssembliesPage';
 
 const Root: React.FC = () => {
   return (
@@ -23,9 +24,9 @@ const Root: React.FC = () => {
         <Route
           path="/assemblies"
           element={
-            <ProtectedRoute>
-              <div>Assemblies</div>
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <AssemblyPage />
+            // </ProtectedRoute>
           }
         />
         <Route path="/assembly/:id/*" element={<AssemblyScreen />} />

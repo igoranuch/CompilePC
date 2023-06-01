@@ -28,11 +28,7 @@ const AssemblyPart: React.FC<AssemblyPartProps> = ({ product }) => {
           <Typography>{title}</Typography>
         </Box>
         <Box className={styles.infoBox}>
-          <img
-            alt={product.name}
-            src={product.mainImage}
-            className={styles.image}
-          />
+          <img alt={product.name} src={product.mainImage} />
           <Link
             style={{ textDecoration: 'none' }}
             to={generatePath(ROUTES.PRODUCT, {
