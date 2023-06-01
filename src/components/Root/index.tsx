@@ -9,7 +9,7 @@ import SignIn from '../SignIn';
 import SignUp from '../SignUp';
 import ProtectedRoute from '../ProtectedRoute';
 import AssemblyScreen from '../AssemblyScreen';
-import AssemblyPage from '../AssembliesPage';
+import AssembliesScreen from '../AssembliesScreen';
 
 const Root: React.FC = () => {
   return (
@@ -24,9 +24,9 @@ const Root: React.FC = () => {
         <Route
           path="/assemblies"
           element={
-            // <ProtectedRoute>
-            <AssemblyPage />
-            // </ProtectedRoute>
+            <ProtectedRoute>
+              <AssembliesScreen />
+            </ProtectedRoute>
           }
         />
         <Route path="/assembly/:id/*" element={<AssemblyScreen />} />
@@ -35,5 +35,4 @@ const Root: React.FC = () => {
   );
 };
 
-// eslint-disable-next-line jest/no-export
 export default Root;
