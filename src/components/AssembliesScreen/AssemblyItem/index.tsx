@@ -1,17 +1,11 @@
 /* eslint-disable react/no-array-index-key */
 import * as React from 'react';
-
-import { Box, Paper, Typography, Skeleton } from '@mui/material';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-
-import { useUser } from 'reactfire';
+import { Box, Paper, Typography } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import { Link, generatePath } from 'react-router-dom';
-import useAssemblies from '../../../hooks/useAssemblies';
-import useStyles from './styles';
-import { AssemblyPartType, FilledAssembly } from '../../../../types';
 import { ROUTES } from '../../../common/constants';
+import { AssemblyPartType, FilledAssembly } from '../../../../types';
+import useStyles from './styles';
 
 type AssemblyItemProps = {
   assembly: FilledAssembly;

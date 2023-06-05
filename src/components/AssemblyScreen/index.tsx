@@ -50,9 +50,8 @@ const AssemblyScreen = () => {
             }}
           >
             {assembly?.parts.map((part, index) => (
-              <Box display="flex" justifyContent="center">
+              <Box display="flex" justifyContent="center" key={index}>
                 <img
-                  key={index}
                   className={styles.carouselImage}
                   alt={part.name}
                   src={part.mainImage}
