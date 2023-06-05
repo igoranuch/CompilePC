@@ -15,7 +15,7 @@ const ProtectedRoute: React.FC<Props> = ({ children }) => {
     if (!user) {
       navigate('/login');
     }
-  }, [user, navigate]);
+  }, [navigate, user]);
 
   return <>{children}</>;
 };

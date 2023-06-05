@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import * as React from 'react';
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import { Link, generatePath } from 'react-router-dom';
 import { ROUTES } from '../../../common/constants';
@@ -15,8 +15,8 @@ const AssemblyItem: React.FC<AssemblyItemProps> = ({ assembly }) => {
   const styles = useStyles();
 
   return (
-    <>
-      <Box className={styles.titleBox}>
+    <Box>
+      <Box display="flex" marginBottom="10px">
         <Link
           style={{ textDecoration: 'none' }}
           to={generatePath(ROUTES.ASSEMBLY, {
@@ -24,85 +24,67 @@ const AssemblyItem: React.FC<AssemblyItemProps> = ({ assembly }) => {
             id: assembly._id,
           })}
         >
-          <Typography className={styles.typo} variant="h3">
+          <Typography className={styles.typo} variant="h4">
             {assembly.name}
           </Typography>
         </Link>
       </Box>
-      <Box className={styles.mainBox}>
-        <Box className={styles.leftBlock}>
-          <Paper
-            sx={{
-              maxWidth: 'auto',
-
-              backgroundColor: '#282828',
-              boxShadow: 'none',
+      <Box className={styles.contentBox}>
+        <Box display="flex">
+          <Carousel
+            swipe={false}
+            fullHeightHover
+            animation="fade"
+            className={styles.carousel}
+            indicatorContainerProps={{
+              style: {
+                position: 'absolute',
+                bottom: 10,
+              },
             }}
           >
-            <Box className={styles.contentBox}>
-              <Carousel
-                swipe={false}
-                fullHeightHover
-                animation="fade"
-                className={styles.carousel}
-                indicatorContainerProps={{
-                  style: {
-                    position: 'absolute',
-                    bottom: 10,
-                  },
-                }}
-              >
-                {assembly?.parts.map((part, index) => (
-                  <Box display="flex" justifyContent="center">
-                    <img
-                      key={index}
-                      className={styles.carouselImage}
-                      alt={part.name}
-                      src={part.mainImage}
-                    />
-                  </Box>
-                ))}
-              </Carousel>
-              <Box
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  flexDirection="column"
-                  justifyContent="center"
-                  gap="15px"
-                  marginRight="50px"
-                >
-                  <Typography gutterBottom variant="h4" component="div">
-                    assembly composition
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    <ul
-                      style={{
-                        paddingLeft: '50px',
-                        marginBottom: 0,
-                        fontSize: '25px',
-                      }}
-                    >
-                      {assembly.parts.map((item: AssemblyPartType) => {
-                        return <li>{item.name}</li>;
-                      })}
-                    </ul>
-                  </Typography>
-                </Box>
-                <Box className={styles.priceBox}>
-                  <Typography variant="h4">{assembly.price} ₴ </Typography>
-                </Box>
+            {assembly?.parts.map((part, index) => (
+              <Box display="flex" justifyContent="center" key={index}>
+                <img
+                  className={styles.carouselImage}
+                  alt={part.name}
+                  src={part.mainImage}
+                />
               </Box>
+            ))}
+          </Carousel>
+        </Box>
+        <Box
+          display="flex"
+          width="100%"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Box
+            display="flex"
+            alignItems="center"
+            flexDirection="column"
+            justifyContent="center"
+          >
+            <Box display="flex" paddingLeft="40px" width="100%">
+              <Typography variant="h4">Assembly parts:</Typography>
             </Box>
-          </Paper>
+            <ul
+              style={{
+                fontSize: '25px',
+              }}
+            >
+              {assembly.parts.map((item: AssemblyPartType, index) => {
+                return <li key={index}>{item.name}</li>;
+              })}
+            </ul>
+          </Box>
+          <Box className={styles.priceBox}>
+            <Typography variant="h4">{assembly.price} ₴ </Typography>
+          </Box>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };
 export default AssemblyItem;
