@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import * as React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import { Link, generatePath } from 'react-router-dom';
 import { ROUTES } from '../../../common/constants';
@@ -15,8 +15,8 @@ const AssemblyItem: React.FC<AssemblyItemProps> = ({ assembly }) => {
   const styles = useStyles();
 
   return (
-    <Box>
-      <Box display="flex" marginBottom="10px">
+    <Box position="relative">
+      <Box display="flex" marginBottom="10px" marginLeft="15px">
         <Link
           style={{ textDecoration: 'none' }}
           to={generatePath(ROUTES.ASSEMBLY, {
@@ -43,8 +43,8 @@ const AssemblyItem: React.FC<AssemblyItemProps> = ({ assembly }) => {
               },
             }}
           >
-            {assembly?.parts.map((part, index) => (
-              <Box display="flex" justifyContent="center" key={index}>
+            {assembly?.parts.map((part) => (
+              <Box display="flex" justifyContent="center" key={part.id}>
                 <img
                   className={styles.carouselImage}
                   alt={part.name}
@@ -59,6 +59,7 @@ const AssemblyItem: React.FC<AssemblyItemProps> = ({ assembly }) => {
           width="100%"
           justifyContent="space-between"
           alignItems="center"
+          gap="50px"
         >
           <Box
             display="flex"
@@ -71,7 +72,7 @@ const AssemblyItem: React.FC<AssemblyItemProps> = ({ assembly }) => {
             </Box>
             <ul
               style={{
-                fontSize: '25px',
+                fontSize: '20px',
               }}
             >
               {assembly.parts.map((item: AssemblyPartType, index) => {
@@ -83,6 +84,17 @@ const AssemblyItem: React.FC<AssemblyItemProps> = ({ assembly }) => {
             <Typography variant="h4">{assembly.price} ₴ </Typography>
           </Box>
         </Box>
+        <Button
+          sx={{
+            position: 'absolute',
+            right: '30px',
+            bottom: '30px',
+            color: 'red',
+          }}
+          variant="outlined"
+        >
+          Delete
+        </Button>
       </Box>
     </Box>
   );

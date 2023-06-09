@@ -78,8 +78,8 @@ const ProductScreen: React.FC = () => {
           <Skeleton
             animation="wave"
             variant="rounded"
-            width={560}
-            height={560}
+            width={490}
+            height={540}
           />
         ) : (
           <Box className={styles.imageBox}>
