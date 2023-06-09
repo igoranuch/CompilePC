@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       flexDirection: 'column',
       flexWrap: 'wrap',
-      maxHeight: '1200px',
+      maxHeight: '1400px',
+      overflow: 'auto',
     },
   }),
 );
