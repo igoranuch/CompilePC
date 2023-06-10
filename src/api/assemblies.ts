@@ -19,6 +19,11 @@ const Assemblies = {
     const { data: assemblyId } = await insertAssembly(assembly);
     return assemblyId;
   },
+  delete: async (id: string): Promise<{ status: boolean }> => {
+    const deleteAssembly = functions.httpsCallable('deleteAssembly');
+    const { data: result } = await deleteAssembly({ id });
+    return result;
+  },
 };
 
 export default Assemblies;

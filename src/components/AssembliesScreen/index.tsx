@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Skeleton, Typography } from '@mui/material';
 import { useUser } from 'reactfire';
+import { useNavigate } from 'react-router-dom';
 import AssemblyItem from './AssemblyItem';
 import useAssemblies from '../../hooks/useAssemblies';
 import { FilledAssembly } from '../../../types';
 
 const AssembliesScreen: React.FC = () => {
+  const navigate = useNavigate();
   const { data: user } = useUser();
+
   const userId = user?.uid;
-  const { data: assemblies, isLoading } = useAssemblies(userId);
+  const { data: assemblies, isError, isLoading } = useAssemblies(userId);
+
+  useEffect(() => {
+    if (isError) navigate('/');
+  }, [isError, navigate]);
 
   return (
     <>
       <Box marginBottom="20px" marginTop="20px">
         {isLoading ? (
-          <Skeleton
-            animation="wave"
-            variant="text"
-            width={800}
-            sx={{ height: '80px', marginLeft: '257px' }}
-          />
+          <Box display="flex" justifyContent="center">
+            <Skeleton
+              animation="wave"
+              variant="text"
+              width={800}
+              sx={{ height: '80px' }}
+            />
+          </Box>
         ) : (
           <Typography
             variant="h4"

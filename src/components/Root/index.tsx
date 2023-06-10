@@ -29,7 +29,14 @@ const Root: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/assembly/:id/*" element={<AssemblyScreen />} />
+        <Route
+          path="/assembly/:id/*"
+          element={
+            <ProtectedRoute>
+              <AssemblyScreen />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Layout>
   );

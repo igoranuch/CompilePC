@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from 'reactfire';
 
@@ -11,11 +11,9 @@ const ProtectedRoute: React.FC<Props> = ({ children }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    }
-  }, [navigate, user]);
+  if (!user) {
+    navigate('/login');
+  }
 
   return <>{children}</>;
 };

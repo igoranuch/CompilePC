@@ -28,6 +28,7 @@ const QUERY_KEY_FACTORIES = {
       },
     ],
     get: (id: string) => [{ ...QUERY_KEY_FACTORIES.PRODUCTS.all(), id }],
+    delete: (id: string) => [{ ...QUERY_KEY_FACTORIES.PRODUCTS.all(), id }],
   },
 };
 

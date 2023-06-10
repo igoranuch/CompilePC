@@ -9,6 +9,10 @@ const getAssemblySchema = Joi.object({
   id: Joi.string(),
 });
 
+const deleteAssemblySchema = Joi.object({
+  id: Joi.string(),
+});
+
 const insertAssemblySchema = Joi.object({
   userId: Joi.string(),
   name: Joi.string(),
@@ -68,4 +72,31 @@ const insertAssembly = functions
     }
   });
 
-export { getAssembly, insertAssembly };
+const deleteAssembly = functions
+  .region(DEFAULT_REGION)
+  .https.onCall(async (data) => {
+    const { id: assemblyId } = data;
+
+    await deleteAssemblySchema.validateAsync({ id: assemblyId });
+
+    const db = await getDB();
+
+    try {
+      const result = await db
+        .collection('assemblies')
+        .deleteOne({ _id: new ObjectId(assemblyId) });
+
+      if (result.deletedCount === 1) {
+        return { status: true };
+      } else {
+        throw new functions.https.HttpsError('not-found', 'Assembly not found');
+      }
+    } catch (error) {
+      throw new functions.https.HttpsError(
+        'internal',
+        'Failed to delete assembly',
+      );
+    }
+  });
+
+export { getAssembly, insertAssembly, deleteAssembly };

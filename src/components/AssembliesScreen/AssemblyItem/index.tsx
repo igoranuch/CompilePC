@@ -3,9 +3,11 @@ import * as React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import { Link, generatePath } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import { ROUTES } from '../../../common/constants';
 import { AssemblyPartType, FilledAssembly } from '../../../../types';
 import useStyles from './styles';
+import Assemblies from '../../../api/assemblies';
 
 type AssemblyItemProps = {
   assembly: FilledAssembly;
@@ -13,6 +15,16 @@ type AssemblyItemProps = {
 
 const AssemblyItem: React.FC<AssemblyItemProps> = ({ assembly }) => {
   const styles = useStyles();
+
+  const deleteAssembly = useMutation({
+    mutationFn: (id: string) => Assemblies.delete(id),
+  });
+
+  const handleDeleteAssembly = () => {
+    // eslint-disable-next-line no-underscore-dangle
+    const result = deleteAssembly.mutate(assembly._id);
+    console.log(result);
+  };
 
   return (
     <Box position="relative">
@@ -92,6 +104,7 @@ const AssemblyItem: React.FC<AssemblyItemProps> = ({ assembly }) => {
             color: 'red',
           }}
           variant="outlined"
+          onClick={handleDeleteAssembly}
         >
           Delete
         </Button>

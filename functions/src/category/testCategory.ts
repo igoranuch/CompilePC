@@ -35,7 +35,7 @@ const runtimeOpts = {
   memory: '8GB',
 };
 
-const testCategory = functions
+const parseCategoryProducts = functions
   .region(DEFAULT_REGION)
   .runWith(runtimeOpts as props)
   .https.onRequest(async () => {
@@ -87,16 +87,15 @@ const testCategory = functions
 
       console.log('Links', productLinks.length);
 
-      // concurrent
-
-      await Promise.map(
-        productLinks as string[],
-        async (link: string) => {
+      await Promise.all(
+        (productLinks as string[]).map(async (link: string) => {
           if (!link) return;
+
           const productPage = await browser.newPage();
           await productPage.goto(`${EKATALOG_LINK}${link}`, {
             waitUntil: ['networkidle2', 'domcontentloaded'],
           });
+
           const productId = link.replace(regexes.cleanLinkForProductId, '');
 
           const parser = parseSolidStateDrivePage; // put YOUR parser here
@@ -109,39 +108,9 @@ const testCategory = functions
             Object.entries(product).filter(([, value]) => value),
           ) as SolidStateDrive; // put your component type here as well
 
-          // console.log(normalizedProduct);
-
           products.push(normalizedProduct);
-        },
-        { concurrency: 6 },
+        }),
       );
-
-      // parallel
-
-      // await Promise.all(
-      //   (productLinks as string[]).map(async (link: string) => {
-      //     if (!link) return;
-
-      //     const productPage = await browser.newPage();
-      //     await productPage.goto(`${EKATALOG_LINK}${link}`, {
-      //       waitUntil: ['networkidle2', 'domcontentloaded'],
-      //     });
-
-      //     const productId = link.replace(regexes.cleanLinkForProductId, '');
-
-      //     const parser = parseCPUPage; // put YOUR parser here
-      //     if (!parser) return;
-
-      //     const product = await parser(productId, productPage);
-      //     if (!product) return;
-
-      //     const normalizedProduct = Object.fromEntries(
-      //       Object.entries(product).filter(([, value]) => value),
-      //     ) as CPU; // put your component type here as well
-
-      //     products.push(normalizedProduct);
-      //   }),
-      // );
 
       console.log('Products', products.length);
 
@@ -163,4 +132,58 @@ const testCategory = functions
     return;
   });
 
-export default testCategory;
+export default parseCategoryProducts;
+
+// parallel
+
+// await Promise.all(
+//   (productLinks as string[]).map(async (link: string) => {
+//     if (!link) return;
+
+//     const productPage = await browser.newPage();
+//     await productPage.goto(`${EKATALOG_LINK}${link}`, {
+//       waitUntil: ['networkidle2', 'domcontentloaded'],
+//     });
+
+//     const productId = link.replace(regexes.cleanLinkForProductId, '');
+
+//     const parser = parseCPUPage; // put YOUR parser here
+//     if (!parser) return;
+
+//     const product = await parser(productId, productPage);
+//     if (!product) return;
+
+//     const normalizedProduct = Object.fromEntries(
+//       Object.entries(product).filter(([, value]) => value),
+//     ) as CPU; // put your component type here as well
+
+//     products.push(normalizedProduct);
+//   }),
+// );
+
+// concurrent
+
+// await Promise.map(
+//   productLinks as string[],
+//   async (link: string) => {
+//     if (!link) return;
+//     const productPage = await browser.newPage();
+//     await productPage.goto(`${EKATALOG_LINK}${link}`, {
+//       waitUntil: ['networkidle2', 'domcontentloaded'],
+//     });
+//     const productId = link.replace(regexes.cleanLinkForProductId, '');
+
+//     const parser = parseSolidStateDrivePage; // put YOUR parser here
+//     if (!parser) return;
+
+//     const product = await parser(productId, productPage);
+//     if (!product) return;
+
+//     const normalizedProduct = Object.fromEntries(
+//       Object.entries(product).filter(([, value]) => value),
+//     ) as SolidStateDrive; // put your component type here as well
+
+//     products.push(normalizedProduct);
+//   },
+//   { concurrency: 6 },
+// );

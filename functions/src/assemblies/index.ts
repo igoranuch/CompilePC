@@ -30,8 +30,6 @@ const getAssemblies = functions
           } as FullAssembly),
       );
 
-      console.log(fullAssemblies);
-
       const assemblies = await Promise.all(
         fullAssemblies.map(async (assembly) => {
           const products = await Promise.all(
