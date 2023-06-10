@@ -27,8 +27,8 @@ const QUERY_KEY_FACTORIES = {
         userId,
       },
     ],
-    get: (id: string) => [{ ...QUERY_KEY_FACTORIES.PRODUCTS.all(), id }],
-    delete: (id: string) => [{ ...QUERY_KEY_FACTORIES.PRODUCTS.all(), id }],
+    get: (id: string) => [{ ...QUERY_KEY_FACTORIES.ASSEMBLIES.all(), id }],
+    delete: (id: string) => [{ ...QUERY_KEY_FACTORIES.ASSEMBLIES.all(), id }],
   },
 };
 

@@ -9,9 +9,7 @@ import { FilledAssembly } from '../../../types';
 const AssembliesScreen: React.FC = () => {
   const navigate = useNavigate();
   const { data: user } = useUser();
-
-  const userId = user?.uid;
-  const { data: assemblies, isError, isLoading } = useAssemblies(userId);
+  const { data: assemblies, isError, isLoading } = useAssemblies(user?.uid);
 
   useEffect(() => {
     if (isError) navigate('/');
@@ -19,21 +17,21 @@ const AssembliesScreen: React.FC = () => {
 
   return (
     <>
-      <Box marginBottom="20px" marginTop="20px">
+      <Box
+        marginBottom="20px"
+        marginTop="20px"
+        display="flex"
+        justifyContent="center"
+      >
         {isLoading ? (
-          <Box display="flex" justifyContent="center">
-            <Skeleton
-              animation="wave"
-              variant="text"
-              width={800}
-              sx={{ height: '80px' }}
-            />
-          </Box>
+          <Skeleton
+            animation="wave"
+            variant="text"
+            width={800}
+            sx={{ height: '80px' }}
+          />
         ) : (
-          <Typography
-            variant="h4"
-            sx={{ fontWeight: 400, marginLeft: '257px' }}
-          >
+          <Typography variant="h4" sx={{ fontWeight: 400 }}>
             My assemblies: {assemblies?.length}
           </Typography>
         )}

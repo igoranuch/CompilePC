@@ -1,13 +1,15 @@
 /* eslint-disable react/no-array-index-key */
-import * as React from 'react';
+import React, { useState, useContext } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import { Link, generatePath } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ROUTES } from '../../../common/constants';
 import { AssemblyPartType, FilledAssembly } from '../../../../types';
 import useStyles from './styles';
 import Assemblies from '../../../api/assemblies';
+import { UIContext } from '../../UIContext';
+import QUERY_KEY_FACTORIES from '../../../common/queryKeyFactories';
 
 type AssemblyItemProps = {
   assembly: FilledAssembly;
@@ -15,15 +17,29 @@ type AssemblyItemProps = {
 
 const AssemblyItem: React.FC<AssemblyItemProps> = ({ assembly }) => {
   const styles = useStyles();
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { setAlert } = useContext(UIContext);
+  const queryClient = useQueryClient();
 
   const deleteAssembly = useMutation({
     mutationFn: (id: string) => Assemblies.delete(id),
+    onSuccess: (data) => {
+      if (data.status) {
+        setAlert({
+          show: true,
+          severity: 'success',
+          message: 'Assembly deleted',
+        });
+        queryClient.invalidateQueries(QUERY_KEY_FACTORIES.ASSEMBLIES.all());
+      }
+      setIsDeleting(false);
+    },
   });
 
   const handleDeleteAssembly = () => {
+    setIsDeleting(true);
     // eslint-disable-next-line no-underscore-dangle
-    const result = deleteAssembly.mutate(assembly._id);
-    console.log(result);
+    deleteAssembly.mutate(assembly._id);
   };
 
   return (
@@ -103,6 +119,7 @@ const AssemblyItem: React.FC<AssemblyItemProps> = ({ assembly }) => {
             bottom: '30px',
             color: 'red',
           }}
+          disabled={isDeleting}
           variant="outlined"
           onClick={handleDeleteAssembly}
         >

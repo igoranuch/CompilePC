@@ -10,7 +10,7 @@ import {
   Box,
 } from '@mui/material';
 import { useUser } from 'reactfire';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -19,6 +19,7 @@ import normalizeAssembly from '../../../../utils/normalizeAssembly';
 import { selectAssembly } from '../../../../store/builder/selectors';
 import Assemblies from '../../../../api/assemblies';
 import { CreatedAssembly } from '../../../../../types';
+import QUERY_KEY_FACTORIES from '../../../../common/queryKeyFactories';
 
 type DialogProps = {
   open: boolean;
@@ -51,9 +52,13 @@ const AssemblySaveDialog: React.FC<DialogProps> = ({
   const assembly = useSelector(selectAssembly);
   const normalizedParts = normalizeAssembly(assembly);
 
+  const queryClient = useQueryClient();
   const addAssembly = useMutation({
     mutationFn: (fullAssembly: CreatedAssembly) =>
       Assemblies.create(fullAssembly),
+    onSuccess: () => {
+      queryClient.invalidateQueries(QUERY_KEY_FACTORIES.ASSEMBLIES.all());
+    },
   });
 
   const handleSave = (values: { name: string; description: string }) => {

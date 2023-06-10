@@ -7,7 +7,9 @@ const Loader = () => {
 
   return (
     <Box className={styles.loaderContainer}>
-      <CircularProgress className={styles.loader} />
+      <Box className={styles.loaderWrapper}>
+        <CircularProgress className={styles.loader} />
+      </Box>
     </Box>
   );
 };
