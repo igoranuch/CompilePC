@@ -4,6 +4,7 @@ import { Box, Button, Typography } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import { Link, generatePath } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useUser } from 'reactfire';
 import { ROUTES } from '../../../common/constants';
 import { AssemblyPartType, FilledAssembly } from '../../../../types';
 import useStyles from './styles';
@@ -20,6 +21,7 @@ const AssemblyItem: React.FC<AssemblyItemProps> = ({ assembly }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const { setAlert } = useContext(UIContext);
   const queryClient = useQueryClient();
+  const { data: user } = useUser();
 
   const deleteAssembly = useMutation({
     mutationFn: (id: string) => Assemblies.delete(id),
@@ -30,9 +32,10 @@ const AssemblyItem: React.FC<AssemblyItemProps> = ({ assembly }) => {
           severity: 'success',
           message: 'Assembly deleted',
         });
-        queryClient.invalidateQueries(QUERY_KEY_FACTORIES.ASSEMBLIES.all());
+        queryClient.invalidateQueries(
+          QUERY_KEY_FACTORIES.ASSEMBLIES.list(user?.uid),
+        );
       }
-      setIsDeleting(false);
     },
   });
 

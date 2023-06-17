@@ -29,13 +29,22 @@ const isSaveable = (assembly: Assembly): boolean => {
     HDD,
   } = assembly;
 
-  if (!CPU || !GPU || !PSU || !RAM || !computerCase || !motherboard) {
+  if (
+    !CPU ||
+    !PSU ||
+    !RAM ||
+    !computerCase ||
+    !motherboard ||
+    (SSD === null && HDD === null)
+  ) {
     return false;
   }
 
-  const hasStorage = SSD !== null || HDD !== null;
+  if (CPU.IGP && CPU.IGP !== 'is absent') {
+    return true;
+  }
 
-  return hasStorage;
+  return GPU !== null;
 };
 
 export { getAverageSum, isEmpty, isSaveable };

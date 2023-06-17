@@ -33,8 +33,12 @@ const getProducts = functions
     await getProductsSchema.validateAsync(filter);
 
     const db = await getDB();
-    const normalizedCompatibleFilters = normalizeFilter(compatiblePropsValues);
-    const normalizedFilter = normalizeFilter(filter);
+
+    const normalizedCompatibleFilters = normalizeFilter(
+      compatiblePropsValues,
+      collectionName,
+    );
+    const normalizedFilter = normalizeFilter(filter, collectionName);
 
     const trimedValue = searchValue.trim();
 

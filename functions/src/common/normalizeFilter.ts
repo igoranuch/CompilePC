@@ -1,4 +1,5 @@
 import { CommonFilter } from '../../../src/utils/getCompatiblePropsValues';
+import { CollectionName } from '../../../types';
 import { regexes } from './constants';
 
 export const generateRange = (prop: string) => {
@@ -20,7 +21,10 @@ export const parseProp = (prop: string) => {
   return [prop];
 };
 
-const normalizeFilter = (params: CommonFilter) => {
+const normalizeFilter = (
+  params: CommonFilter,
+  collectionName: CollectionName,
+) => {
   const normalizedParams = Object.fromEntries(
     Object.entries(params).filter(([_, value]) => value),
   );
@@ -48,7 +52,11 @@ const normalizeFilter = (params: CommonFilter) => {
   const filteredPower = parsedFilters.power
     ? Object.assign(properFilter, {
         ['power']: {
-          $gte: Number(parsedFilters.power),
+          ...(collectionName === 'graphicsCards'
+            ? { $lte: Number(parsedFilters.power) }
+            : collectionName === 'PSUs' && {
+                $gte: Number(parsedFilters.power),
+              }),
         },
       })
     : properFilter;

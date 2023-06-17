@@ -9,10 +9,12 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import useStyles from './styles';
 import FilterItem from '../FilterItem';
 import { Filter } from '../filters';
-import { SelectedFilter } from '../../../../../types';
+import { CompatibleFilter, SelectedFilter } from '../../../../../types';
+import { selectCompatibleFilters } from '../../../../store/builder/selectors';
 
 type AccordionFilterProps = {
   filter: Filter;
@@ -44,10 +46,17 @@ const AccordionFilter: React.FC<AccordionFilterProps> = ({
       </IconButton>
     );
 
+  const compatibleObject = useSelector(selectCompatibleFilters);
+  const isDisabled = Object.keys(compatibleObject).some((key) =>
+    // eslint-disable-next-line no-prototype-builtins
+    compatibleObject[key as keyof CompatibleFilter]?.hasOwnProperty(filter.key),
+  );
+
   return (
     <Accordion
       className={styles.wrapper}
       expanded={openedFilter === filter.key}
+      disabled={isDisabled}
     >
       <AccordionSummary
         className={styles.accordionSummary}

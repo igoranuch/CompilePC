@@ -44,7 +44,7 @@ const ProductCategories = {
   },
   PSU: {
     categoryName: 'PSU',
-    builderTitle: 'Power suply unit',
+    builderTitle: 'Power supply unit',
     collectionName: 'PSUs',
   },
   RAM: {
