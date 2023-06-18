@@ -52,11 +52,12 @@ const normalizeFilter = (
   const filteredPower = parsedFilters.power
     ? Object.assign(properFilter, {
         ['power']: {
-          ...(collectionName === 'graphicsCards'
-            ? { $lte: Number(parsedFilters.power) }
-            : collectionName === 'PSUs' && {
-                $gte: Number(parsedFilters.power),
-              }),
+          ...(collectionName === 'graphicsCards' && {
+            $lte: Number(parsedFilters.power),
+          }),
+          ...(collectionName === 'PSUs' && {
+            $gte: Number(parsedFilters.power),
+          }),
         },
       })
     : properFilter;
