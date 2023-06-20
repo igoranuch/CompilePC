@@ -46,14 +46,12 @@ const parseCategoryProducts = functions
         ignoreHTTPSErrors: true,
       };
 
-      console.time('Time this');
-
       const db = await getDB();
 
       const categoriesCursor = db.collection(CATEGORIES_COLLECTION_NAME).find();
       const categories = await categoriesCursor.toArray();
 
-      const category = categories[5]; // choose your category by index; add it beforehand in firebase console, if it does not exist
+      const category = categories[5];
       if (!category) return;
 
       const browser = await puppeteer.launch(options);
@@ -65,7 +63,7 @@ const parseCategoryProducts = functions
       await page.click("[data-lang='en']");
       await page.waitForTimeout(7500);
 
-      const n = 6; // Set the maximum number of pages
+      const n = 6;
 
       let loadMoreButton = await page.$x(xPathSelectors.loadMoreButton);
       let clickCount = 0;
@@ -83,9 +81,7 @@ const parseCategoryProducts = functions
         ),
       );
 
-      const products: SolidStateDrive[] = []; // put your component type here
-
-      console.log('Links', productLinks.length);
+      const products: SolidStateDrive[] = [];
 
       await Promise.all(
         (productLinks as string[]).map(async (link: string) => {
@@ -112,20 +108,14 @@ const parseCategoryProducts = functions
         }),
       );
 
-      console.log('Products', products.length);
-
       const categoryCollectionRef = db.collection(category.name);
       const bulk = categoryCollectionRef.initializeUnorderedBulkOp();
-
       await categoryCollectionRef.deleteMany({});
       products.forEach((product) => {
         bulk.insert(product);
       });
       await bulk.execute();
       await browser.close();
-
-      console.log('finish');
-      console.timeEnd('Time this');
     } catch (err) {
       console.log(err);
     }
