@@ -73,19 +73,19 @@ const ProductScreen: React.FC = () => {
           ))}
         </Tabs>
       </Box>
-      <Box display="flex" justifyContent="space-between">
-        <Box>
-          {isLoading ? (
-            <Skeleton
-              animation="wave"
-              variant="rectangular"
-              width={560}
-              height={364}
-            />
-          ) : (
+      <Box display="flex" justifyContent="space-between" marginTop="10px">
+        {isLoading ? (
+          <Skeleton
+            animation="wave"
+            variant="rounded"
+            width={490}
+            height={540}
+          />
+        ) : (
+          <Box className={styles.imageBox}>
             <ProductImage />
-          )}
-        </Box>
+          </Box>
+        )}
         <PriceTable
           product={product}
           category={category.categoryName}
@@ -107,7 +107,6 @@ const ProductScreen: React.FC = () => {
               />
             }
           />
-          <Route path="/reviews" element={<div>Nothing yet</div>} />
           <Route
             path="/stores"
             element={

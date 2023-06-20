@@ -99,7 +99,7 @@ const PriceTable: React.FC<PriceTableProps> = ({
             <Box className={styles.topRow} gap={4}>
               <Typography variant="h4">
                 {isLoading ? (
-                  <Skeleton variant="text" animation="wave" width={400} />
+                  <Skeleton variant="text" animation="wave" width={350} />
                 ) : (
                   `${product?.price.range.minPrice.toLocaleString()} ₴ -
                 ${product?.price.range.maxPrice.toLocaleString()} ₴`

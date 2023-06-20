@@ -9,8 +9,9 @@ import { CategoryName } from '../../../../types';
 import useStyles from './styles';
 import { selectAssembly } from '../../../store/builder/selectors';
 import { eraseAssembly } from '../../../store/builder/slice';
-import { getAverageSum, isEmpty } from '../../../utils/assembly';
+import { getAverageSum, isEmpty, isSaveable } from '../../../utils/assembly';
 import AssemblyPart from './AssemblyPart';
+import AssemblySaveDialog from './AssemblySaveDialog';
 
 const Assembly = () => {
   const styles = useStyles();
@@ -21,7 +22,15 @@ const Assembly = () => {
 
   const isAssemblyEmpty = useMemo(() => isEmpty(assembly), [assembly]);
 
+  const isAssemblySaveable = useMemo(() => isSaveable(assembly), [assembly]);
+
   const totalSum = useMemo(() => getAverageSum(assembly), [assembly]);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
   return (
     <Box className={styles.sideSection}>
@@ -60,7 +69,8 @@ const Assembly = () => {
               variant="contained"
               fullWidth
               className={styles.button}
-              disabled={isAssemblyEmpty}
+              disabled={!isAssemblySaveable}
+              onClick={handleClickOpen}
             >
               Save
             </Button>
@@ -74,6 +84,11 @@ const Assembly = () => {
             >
               Clear
             </Button>
+            <AssemblySaveDialog
+              open={open}
+              setOpen={setOpen}
+              total={totalSum}
+            />
           </Box>
         </Box>
       </Paper>
