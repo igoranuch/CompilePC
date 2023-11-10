@@ -5,7 +5,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     tableWrapper: {
       margin: `${theme.spacing(3)} ${theme.spacing(6)}`,
-      maxWidth: 850,
+      maxWidth: 930,
+      minWidth: 700,
       maxHeight: 395,
       height: '100%',
     },
@@ -32,7 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
-    errorText: {},
     topRow: {
       display: 'flex',
       alignItems: 'center',

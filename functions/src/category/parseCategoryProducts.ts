@@ -21,7 +21,7 @@ const runtimeOpts = {
   timeoutSeconds: 540,
 };
 
-const parseComponentsData = functions
+const testParseComponentsData = functions
   .region(DEFAULT_REGION)
   .runWith(runtimeOpts)
   .https.onRequest(async () => {
@@ -97,4 +97,4 @@ const parseComponentsData = functions
     return;
   });
 
-export default parseComponentsData;
+export default testParseComponentsData;

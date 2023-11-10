@@ -1,8 +1,9 @@
-import Joi = require('joi');
+import Joi from 'joi';
 import { getDB } from '../bootstrap';
 import { DEFAULT_REGION } from '../common/constants';
 import * as functions from 'firebase-functions';
-import naormalizeFilter from '../common/normalizeFilter';
+import normalizeFilter from '../common/normalizeFilter';
+import getCompatiblePropsValues from '../../../src/utils/getCompatiblePropsValues';
 
 const getProductsSchema = Joi.object({
   minPrice: Joi.number(),
@@ -15,15 +16,55 @@ const getProductsSchema = Joi.object({
 const getProducts = functions
   .region(DEFAULT_REGION)
   .https.onCall(async (data) => {
-    const { collectionName, filter } = data;
+    const {
+      collectionName,
+      filter,
+      pageParam,
+      pageSize,
+      compatibleFilters,
+      searchValue,
+    } = data;
+
+    const compatiblePropsValues = getCompatiblePropsValues(
+      collectionName,
+      compatibleFilters,
+    );
+
     await getProductsSchema.validateAsync(filter);
 
     const db = await getDB();
-    const normalizedFilter = naormalizeFilter(filter);
-    const cursor = await db.collection(collectionName).find(normalizedFilter);
+
+    const normalizedCompatibleFilters = normalizeFilter(
+      compatiblePropsValues,
+      collectionName,
+    );
+    const normalizedFilter = normalizeFilter(filter, collectionName);
+
+    const trimedValue = searchValue.trim();
+
+    const searchFilter = Object.assign(
+      trimedValue && { name: new RegExp(trimedValue, 'i') },
+      {},
+    );
+
+    const cursor = await db
+      .collection(collectionName)
+      .find({
+        ...normalizedFilter,
+        ...normalizedCompatibleFilters,
+        ...searchFilter,
+      })
+      .limit(pageSize)
+      .skip((pageParam - 1) * pageSize);
+
     const result = await cursor.toArray();
 
-    return result;
+    const count = result.length;
+
+    return {
+      result,
+      nextPage: count < pageSize ? null : pageParam + 1,
+    };
   });
 
 export default getProducts;

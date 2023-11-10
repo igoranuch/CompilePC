@@ -36,7 +36,7 @@ const StoresTable: React.FC<StoresTableProps> = ({
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom marginTop="20px">
         Where to buy
       </Typography>
       <Paper className={styles.paperWrapper}>
